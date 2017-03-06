@@ -1,6 +1,6 @@
 <?php
 /********************************************************************
-Version     :	1.0.05
+Version     :	1.0.06
 Author      :   Mark Richardson
 Purpose     :   b2b>iip>icm comms with inin and osc integration
 				model built for integration as an include and as a posted service
@@ -44,11 +44,10 @@ list ($common_cfgid, $rnw_common_cfgid, $rnw_ui_cfgid, $custom_cfgid) = msg_init
 list ($common_mbid, $rnw_mbid) = msg_init($p_cfgdir, 'msgbase', array('common', 'rnw'));
 
 header('Content-type: text/html; charset=utf-8');  // reset output from included classes above for testing and errors
-
 /*********************************************************************/
 
 $icmModel             = new icmModel();
-$icmModel->db_name    = cfg_get($common_cfgid, DB_NAME);
+//$icmModel->db_name    = cfg_get($common_cfgid, DB_NAME);
 
 // action as specified in the get parameter
 Switch ($icmModel->inputAction){
@@ -152,6 +151,7 @@ class icmModel {
             $this->host       	= RNCPHP\Configuration::fetch( CUSTOM_CFG_ICMModel_b2burl )->Value;
             $this->login      	= RNCPHP\Configuration::fetch( CUSTOM_CFG_ICMModel_b2buser )->Value;
             $this->password   	= RNCPHP\Configuration::fetch( CUSTOM_CFG_ICMModel_b2bpass )->Value;
+            $this->db_name		= cfg_get($common_cfgid, DB_NAME);
 
             if($this->posted[self::pv_market]=="") $this->return_message("","","Market required");
 			if($this->posted[self::pv_contactmarket]!="")  $this->contactmarket	= RNCPHP\Country::fetch($this->posted[self::pv_contactmarket]);
